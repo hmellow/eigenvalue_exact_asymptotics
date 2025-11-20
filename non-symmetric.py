@@ -10,6 +10,7 @@ Analyzing the empirical spectral distribution of a non-symmetric random matrix
 
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import *
 
 
 def generate_gaussian_random_matrix(p, mean, variance):
@@ -24,42 +25,6 @@ def generate_scaled_binary_random_matrix(p):
     return A
 
 
-def plot_eigenvalue_histogram(A, gamma, variance):
-    eigenvalues = np.linalg.eigvals(A)
-    p = A.shape[0]
-
-    plt.figure()
-    # plt.title("ESD of non-symmetric random matrix - $\\mathcal{N}(0, 1/p)$ case")
-    plt.title(
-        "ESD of non-symmetric random matrix - $\\mathbb{P}(A_{ij}=\\frac{1}{\\sqrt{p}})=\\mathbb{P}(A_{ij}=\\frac{-1}{\\sqrt{p}})=\\frac{1}{2}$ case"
-    )
-    plt.xlabel("Real")
-    plt.ylabel("Imaginary")
-    plt.plot(
-        eigenvalues.real,
-        eigenvalues.imag,
-        ".",
-        color="blue",
-        label="Eigenvalues",
-    )
-
-    # Plot the theoretical semicircle
-    r = 1
-    theta = np.linspace(0, 2 * np.pi, 100)
-    x = r * np.cos(theta)
-    y = r * np.sin(theta)
-    plt.plot(
-        x,
-        y,
-        color="red",
-        linewidth=2,
-        label="Theoretical distribution from circular law",
-    )
-
-    plt.legend(loc="best")
-    plt.show()
-
-
 p = 2000
 gamma = 1  # Scaling
 
@@ -67,7 +32,8 @@ gamma = 1  # Scaling
 def main():
     # A = generate_gaussian_random_matrix(p, mean=0, variance=np.sqrt(1 / p**gamma))
     A = generate_scaled_binary_random_matrix(p)
-    plot_eigenvalue_histogram(A, gamma, np.sqrt(1 / p**gamma))
+    # plot_complex_esd(A, gamma, np.sqrt(1 / p**gamma))
+    plot_copmlex_esd(As)
 
 
 if __name__ == "__main__":
